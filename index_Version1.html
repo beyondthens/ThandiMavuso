@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THANDI MAVUSO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* Password Protection Styles */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .password-form {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .password-form h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .password-form input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .password-form input:focus {
+            border-color: #667eea;
+        }
+
+        .password-form button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-form button:hover {
+            background: #5a6fd8;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .video-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .video-info {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .video-info h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .video-info p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .feature-card h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card ul {
+            color: white;
+            font-size: 1.0rem;
+            margin-bottom: 15px;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .feature-card p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .video-section {
+                padding: 20px;
+            }
+            
+            .container {
+                padding: 20px 10px;
+            }
+
+            .password-form {
+                padding: 30px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection Overlay -->
+    <div id="passwordOverlay" class="password-overlay">
+        <div class="password-form">
+            <h2>🔒 Video Access Required</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to watch this exclusive video content.</p>
+            <input type="password" id="passwordInput" placeholder="Enter password" maxlength="50">
+            <button onclick="checkPassword()">Access Video</button>
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="header">
+            <h1>The Proven 3-Step Framework To Sign Up 20-50 New Clients Every Single Month With Zero Objection and Without Bugging Friends & Family</h1>
+            <p>WELCOME TO THANDI MAVUSO'S</p>
+        </div>
+
+        <div class="video-section">
+            <div class="video-container">
+                <video id="mainVideo" controls poster="https://via.placeholder.com/800x450/667eea/ffffff?text=Video+Thumbnail">
+                    <source src="https://drive.google.com/file/d/1JlhFsfa4avhlVnpqi4BXDVyNZDMhwda" type="video/mp4">
+                    <a href="https://drive.google.com/file/d/1JlhFsfa4avhlVnpqi4BXDVyNZDMhwda" target="_blank">Watch Video</a>
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="video-info">
+                <a href="https://www.example.com/join-challenge" target="_blank" rel="noopener"
+                    style="display:inline-block;padding:14px 32px;background:#667eea;color:#fff;font-size:1.2rem;font-weight:600;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px rgba(102,126,234,0.15);transition:background 0.2s;">JOIN
+                    THE CHALLENGE</a>
+                <p>Join result driven training and elevate your business</p>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>Lead Generation Masterclass</h3>
+                <p>
+                    A 5-Day training series on how to set up a simple lead generation system that gets interested and qualified
+                    prospects who are serious and ready to join your team, coming to you every day rather than you chasing after
+                    them. You will get this training immediately upon joining this training. In this training, you will
+                    discover:
+                </p>
+                <ul>
+                    <li>How to set up a funnel that sells your products without you being there</li>
+                    <li>How to set up recruiting funnels and recruit downlines even while you are sleeping</li>
+                    <li>How to prospect and present your opportunity to people without you talking to any single person</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>7 Steps To Total Domination</h3>
+                <p>
+                    We will be unveiling to you 7 strategic steps to dominate in your current company or any business you choose
+                    to promote. This special training is the secret behind everything we do and I will be unveiling it to you in
+                    the special training.
+                </p>
+                <ul>
+                    <li>How to stand out from the crowd and completely annihilate every competition</li>
+                    <li>How to dominate in any company you are promoting, even if the company has been running for 10 years and
+                        you just signed up today</li>
+                    <li>How to scale and go global with your opportunity</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Facebook & Instagram Ads Mastery</h3>
+                <p>
+                    We will be unveiling to you how to use Facebook and Instagram Ads To scale your business.
+                </p>
+                <ul>
+                    <li>How to launch ads that convert and get result</li>
+                    <li>How to never get banned running Facebook and Instagram ads</li>
+                    <li>How to create and set up ads manager account</li>
+                    <li>Understanding how to target the right audience</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Chatbots For Network Marketers</h3>
+                <p>
+                    Discover how to automate conversations with prospects, automate product and opportunity presentation and get
+                    them enroll as team members using automated chatbot marketing.
+                </p>
+                <ul>
+                    <li>How to set up Facebook automated chatbot sequence</li>
+                    <li>How to answer questions and deliver presentations via a chatbot without being present online</li>
+                    <li>How to prospect and present to thousands of people with a chatbot</li>
+                    <li>How to connect Facebook ads to a chatbot sequence, generate leads, deliver lead magnets and
+                        presentations all on complete autopilot</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Advanced Whatsapp Marketing Masterclass</h3>
+                <p>
+                    Discover how to automate conversations with prospects, automate product and opportunity presentation and get
+                    them enroll as team members using automated chatbot marketing.
+                </p>
+                <ul>
+                    <li>How to set up Whatsapp automated marketing sequence</li>
+                    <li>Mastering Whatsapp list building and lead generation strategies</li>
+                    <li>How to sell, prospect and deliver presentations on Whatsapp on complete autopilot</li>
+                    <li>How to prospect and present to thousands of people using Whatsapp</li>
+                    <li>How to connect Facebook ads to a Whatsapp sequence, generate leads, deliver lead magnets and
+                        presentations all on complete autopilot</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password protection functionality
+        const correctPassword = "THANDI2024"; // Change this to your desired password
+        const passwordOverlay = document.getElementById('passwordOverlay');
+        const passwordInput = document.getElementById('passwordInput');
+        const errorMessage = document.getElementById('errorMessage');
+        const mainVideo = document.getElementById('mainVideo');
+
+        // Disable video by default
+        mainVideo.style.pointerEvents = 'none';
+        mainVideo.removeAttribute('controls');
+
+        function checkPassword() {
+            const enteredPassword = passwordInput.value.trim();
+            
+            if (enteredPassword === correctPassword) {
+                // Correct password
+                passwordOverlay.classList.add('hidden');
+                mainVideo.style.pointerEvents = 'auto';
+                mainVideo.setAttribute('controls', 'controls');
+                
+                // Store password verification in session storage
+                sessionStorage.setItem('videoAccess', 'granted');
+                
+                // Focus on video for better user experience
+                mainVideo.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Wrong password
+                errorMessage.textContent = 'Incorrect password. Please try again.';
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Shake animation for error feedback
+                passwordInput.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    passwordInput.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Allow Enter key to submit password
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Check if user already entered password in this session
+        if (sessionStorage.getItem('videoAccess') === 'granted') {
+            passwordOverlay.classList.add('hidden');
+            mainVideo.style.pointerEvents = 'auto';
+            mainVideo.setAttribute('controls', 'controls');
+        }
+
+        // Prevent right-click context menu on video
+        mainVideo.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Focus password input when page loads
+        window.addEventListener('load', function() {
+            passwordInput.focus();
+        });
+
+        // Add CSS for shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
